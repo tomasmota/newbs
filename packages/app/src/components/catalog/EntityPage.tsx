@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Grid } from '@material-ui/core';
 import {
   EntityApiDefinitionCard,
   EntityConsumedApisCard,
@@ -37,12 +36,13 @@ import {
   EntityOwnershipCard,
 } from '@backstage/plugin-org';
 import { EntityTechdocsContent } from '@backstage/plugin-techdocs';
-import { EmptyState } from '@backstage/core-components';
+import { EmptyState, Breadcrumbs, Link, LinkButton } from '@backstage/core-components';
 import {
   Direction,
   EntityCatalogGraphCard,
 } from '@backstage/plugin-catalog-graph';
 import {
+    Entity,
   RELATION_API_CONSUMED_BY,
   RELATION_API_PROVIDED_BY,
   RELATION_CONSUMES_API,
@@ -55,6 +55,10 @@ import {
 
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { Box } from '@material-ui/core';
+import { EntityPulsarContent } from '@internal/plugin-apache-pulsar';
 
 const techdocsContent = (
   <EntityTechdocsContent>
@@ -78,19 +82,42 @@ const cicdContent = (
         missing="info"
         description="You need to add an annotation to your component if you want to enable CI/CD for it. You can read more about annotations in Backstage by clicking the button below."
         action={
-          <Button
-            variant="contained"
-            color="primary"
-            href="https://backstage.io/docs/features/software-catalog/well-known-annotations"
-          >
+          <LinkButton
+                variant="contained"
+                color="primary"
+                href="https://backstage.io/docs/features/software-catalog/well-known-annotations" to={''}          >
             Read more
-          </Button>
+          </LinkButton>
         }
       />
     </EntitySwitch.Case>
   </EntitySwitch>
 );
 
+const isPulsarInformationAvailable = (_: Entity) => true
+const pulsarContent = (
+  <EntitySwitch>
+    <EntitySwitch.Case if={isPulsarInformationAvailable}>
+      <EntityPulsarContent />
+    </EntitySwitch.Case>
+
+    <EntitySwitch.Case>
+      <EmptyState
+        title="No Pulsar information available for this service"
+        missing="info"
+        description="In order to see Pulsar information for your service, you must add an annotation."
+        action={
+          <LinkButton
+                variant="contained"
+                color="primary"
+                href="https://backstage.io/docs/features/software-catalog/well-known-annotations" to={''}          >
+            Read more
+          </LinkButton>
+        }
+      />
+    </EntitySwitch.Case>
+  </EntitySwitch>
+);
 const entityWarningContent = (
   <>
     <EntitySwitch>
@@ -115,14 +142,31 @@ const overviewContent = (
   <Grid container spacing={3} alignItems="stretch">
     {entityWarningContent}
     <Grid item md={6}>
-      <EntityAboutCard variant="gridItem" />
+      <EntityAboutCard variant="gridItem"/>
     </Grid>
     <Grid item md={6} xs={12}>
       <EntityCatalogGraphCard variant="gridItem" height={400} />
     </Grid>
 
     <Grid item md={4} xs={12}>
-      <EntityLinksCard />
+      <Breadcrumbs color="primaryText">
+        <Link to="/">General Page</Link>
+        <Link to="/">Second Page</Link>
+        <Link to="/">Third Page</Link>
+        <Link to="/">Fourth Page</Link>
+        <Typography>Current page</Typography>
+      </Breadcrumbs>
+        <Box>
+          <Breadcrumbs color="primaryText">
+            <Link to="/catalog">General Page</Link>
+            <Link to="/">Second Page</Link>
+            <Link to="/">Second Page</Link>
+            <Link to="/">Second Page</Link>
+            <Link to="/">Second Page</Link>
+            <Link to="/">Second Page</Link>
+            <Typography>Current page</Typography>
+          </Breadcrumbs>
+      </Box>
     </Grid>
     <Grid item md={8} xs={12}>
       <EntityHasSubcomponentsCard variant="gridItem" />
@@ -172,6 +216,10 @@ const websiteEntityPage = (
   <EntityLayout>
     <EntityLayout.Route path="/" title="Overview">
       {overviewContent}
+    </EntityLayout.Route>
+
+    <EntityLayout.Route path="/pulsar" title="Pulsar">
+      {pulsarContent}
     </EntityLayout.Route>
 
     <EntityLayout.Route path="/ci-cd" title="CI/CD">

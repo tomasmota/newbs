@@ -1,0 +1,2 @@
+[submodule "plugins/apache-pulsar"]
+	url = git@github.com:tomasmota/backstage-plugin-pulsar.git
