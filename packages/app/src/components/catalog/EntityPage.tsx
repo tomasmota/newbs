@@ -36,13 +36,18 @@ import {
   EntityOwnershipCard,
 } from '@backstage/plugin-org';
 import { EntityTechdocsContent } from '@backstage/plugin-techdocs';
-import { EmptyState, Breadcrumbs, Link, LinkButton } from '@backstage/core-components';
+import {
+  EmptyState,
+  Breadcrumbs,
+  Link,
+  LinkButton,
+} from '@backstage/core-components';
 import {
   Direction,
   EntityCatalogGraphCard,
 } from '@backstage/plugin-catalog-graph';
 import {
-    Entity,
+  Entity,
   RELATION_API_CONSUMED_BY,
   RELATION_API_PROVIDED_BY,
   RELATION_CONSUMES_API,
@@ -83,9 +88,11 @@ const cicdContent = (
         description="You need to add an annotation to your component if you want to enable CI/CD for it. You can read more about annotations in Backstage by clicking the button below."
         action={
           <LinkButton
-                variant="contained"
-                color="primary"
-                href="https://backstage.io/docs/features/software-catalog/well-known-annotations" to={''}          >
+            variant="contained"
+            color="primary"
+            href="https://backstage.io/docs/features/software-catalog/well-known-annotations"
+            to={''}
+          >
             Read more
           </LinkButton>
         }
@@ -94,11 +101,11 @@ const cicdContent = (
   </EntitySwitch>
 );
 
-const isPulsarInformationAvailable = (_: Entity) => true
+const isPulsarInformationAvailable = (_: Entity) => true;
 const pulsarContent = (
   <EntitySwitch>
     <EntitySwitch.Case if={isPulsarInformationAvailable}>
-      <EntityPulsarContent />
+      <EntityPulsarContent topic="my-topic" />
     </EntitySwitch.Case>
 
     <EntitySwitch.Case>
@@ -108,9 +115,11 @@ const pulsarContent = (
         description="In order to see Pulsar information for your service, you must add an annotation."
         action={
           <LinkButton
-                variant="contained"
-                color="primary"
-                href="https://backstage.io/docs/features/software-catalog/well-known-annotations" to={''}          >
+            variant="contained"
+            color="primary"
+            href="https://backstage.io/docs/features/software-catalog/well-known-annotations"
+            to={''}
+          >
             Read more
           </LinkButton>
         }
@@ -142,7 +151,7 @@ const overviewContent = (
   <Grid container spacing={3} alignItems="stretch">
     {entityWarningContent}
     <Grid item md={6}>
-      <EntityAboutCard variant="gridItem"/>
+      <EntityAboutCard variant="gridItem" />
     </Grid>
     <Grid item md={6} xs={12}>
       <EntityCatalogGraphCard variant="gridItem" height={400} />
@@ -156,16 +165,16 @@ const overviewContent = (
         <Link to="/">Fourth Page</Link>
         <Typography>Current page</Typography>
       </Breadcrumbs>
-        <Box>
-          <Breadcrumbs color="primaryText">
-            <Link to="/catalog">General Page</Link>
-            <Link to="/">Second Page</Link>
-            <Link to="/">Second Page</Link>
-            <Link to="/">Second Page</Link>
-            <Link to="/">Second Page</Link>
-            <Link to="/">Second Page</Link>
-            <Typography>Current page</Typography>
-          </Breadcrumbs>
+      <Box>
+        <Breadcrumbs color="primaryText">
+          <Link to="/catalog">General Page</Link>
+          <Link to="/">Second Page</Link>
+          <Link to="/">Second Page</Link>
+          <Link to="/">Second Page</Link>
+          <Link to="/">Second Page</Link>
+          <Link to="/">Second Page</Link>
+          <Typography>Current page</Typography>
+        </Breadcrumbs>
       </Box>
     </Grid>
     <Grid item md={8} xs={12}>
