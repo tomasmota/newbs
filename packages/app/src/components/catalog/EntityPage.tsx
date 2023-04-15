@@ -105,25 +105,7 @@ const isPulsarInformationAvailable = (_: Entity) => true;
 const pulsarContent = (
   <EntitySwitch>
     <EntitySwitch.Case if={isPulsarInformationAvailable}>
-      <EntityPulsarContent topic='trash' />
-    </EntitySwitch.Case>
-
-    <EntitySwitch.Case>
-      <EmptyState
-        title="No Pulsar information available for this service"
-        missing="info"
-        description="In order to see Pulsar information for your service, you must add an annotation."
-        action={
-          <LinkButton
-            variant="contained"
-            color="primary"
-            href="https://backstage.io/docs/features/software-catalog/well-known-annotations"
-            to={''}
-          >
-            Read more
-          </LinkButton>
-        }
-      />
+      <EntityPulsarContent/>
     </EntitySwitch.Case>
   </EntitySwitch>
 );
