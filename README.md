@@ -1,6 +1,6 @@
 # [Backstage](https://backstage.io)
 
-This is your newly scaffolded Backstage App, Good Luck!
+Backstage instance for developing pulsar plugin
 
 To start the app, run:
 
