@@ -63,7 +63,7 @@ import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { Box } from '@material-ui/core';
-import { EntityPulsarContent } from '@internal/plugin-apache-pulsar';
+import { EntityPulsarContent } from '@internal/plugin-pulsar';
 
 const techdocsContent = (
   <EntityTechdocsContent>
