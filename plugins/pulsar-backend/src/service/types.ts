@@ -5,4 +5,5 @@ export type ListTopicsResponse = {
 /** @public */
 export type PulsarService = {
   listTopics(): Promise<ListTopicsResponse>;
+  topicStats(): Promise<ListTopicsResponse>;
 };

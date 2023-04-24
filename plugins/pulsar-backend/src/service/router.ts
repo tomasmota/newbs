@@ -20,9 +20,12 @@ export async function createRouter(
     response.json({ status: 'ok' });
   });
 
-  router.get('/topics', (_, response) => {
-    logger.info('Fetching topics');
-    response.json({ topicCount: 42 });
+  router.get(':tenant/:namespace/:topic/stats', (req, res) => {
+    const tenant = req.params.tenant;
+    const namespace = req.params.namespace;
+    const topic = req.params.tenant;
+    logger.info(`fetching stats for topic ${tenant}/${namespace}/${topic}`);
+    res.json({ topicCount: 42 });
   });
 
   router.use(errorHandler());

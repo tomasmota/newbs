@@ -27,7 +27,7 @@ export class PulsarClient implements PulsarApi {
   ): Promise<TopicStats> {
     const baseUrl = await this.discoveryApi.getBaseUrl('pulsar');
     // const targetUrl = `${baseUrl}/admin/v2/persistent/${tenant}/${namespace}/${topic}/stats`;
-    const targetUrl = `${baseUrl}/topics`;
+    const targetUrl = `${baseUrl}/${tenant}/${namespace}/${topic}/stats`;
     console.log(tenant + namespace + topic);
 
     const result = await this.fetchApi.fetch(targetUrl);
