@@ -1,16 +1,31 @@
 import { errorHandler } from '@backstage/backend-common';
+import { PluginTaskScheduler } from '@backstage/backend-tasks';
 import express from 'express';
 import Router from 'express-promise-router';
 import { Logger } from 'winston';
 
 export interface RouterOptions {
   logger: Logger;
+  scheduler: PluginTaskScheduler;
 }
 
 export async function createRouter(
   options: RouterOptions,
 ): Promise<express.Router> {
-  const { logger } = options;
+  const { logger, scheduler } = options;
+
+  await scheduler.scheduleTask({
+    id: 'pulsar-fetch-stats',
+    frequency: {minutes: 10 },
+    timeout: {minutes: 5 },
+    initialDelay: { minutes: 1 },
+    scope: "global",
+    fn: async () => {
+      console.log("\n\n\n\n\n\n\nFETCHING PULSAR STATS\n\n\n\n");
+      // await linguistBackendApi.processEntities();
+    },
+  });
+
 
   const router = Router();
   router.use(express.json());

@@ -2,6 +2,7 @@ import { createRouter } from '@internal/plugin-pulsar-backend';
 import { Router } from 'express';
 import { PluginEnvironment } from '../types';
 
+
 export default async function createPlugin(
   env: PluginEnvironment,
 ): Promise<Router> {
@@ -12,5 +13,9 @@ export default async function createPlugin(
   // needs a logger
   return await createRouter({
     logger: env.logger,
+    scheduler: env.scheduler
   });
+  
+  // const r : RouterOptions = {scheduler: env.scheduler}
+  // return await createRouter();
 }
