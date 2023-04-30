@@ -16,7 +16,7 @@ async function runProducer(producer: Producer): Promise<void> {
 async function runConsumer(consumer: Consumer, sleepTimeMs: number = 0): Promise<void> {
   while(true) {
     const msg = await consumer.receive();
-    console.log(`Consumer Received message: ${msg.getData().toString()}, sleeping for ${sleepTimeMs} miliseconds`);
+    // console.log(`Consumer Received message: ${msg.getData().toString()}, sleeping for ${sleepTimeMs} miliseconds`);
     consumer.acknowledge(msg);
     await sleep(sleepTimeMs);
   }

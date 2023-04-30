@@ -75,7 +75,7 @@ function runConsumer(consumer, sleepTimeMs) {
                     return [4 /*yield*/, consumer.receive()];
                 case 1:
                     msg = _a.sent();
-                    console.log("Consumer Received message: ".concat(msg.getData().toString(), ", sleeping for ").concat(sleepTimeMs, " miliseconds"));
+                    // console.log(`Consumer Received message: ${msg.getData().toString()}, sleeping for ${sleepTimeMs} miliseconds`);
                     consumer.acknowledge(msg);
                     return [4 /*yield*/, sleep(sleepTimeMs)];
                 case 2:
