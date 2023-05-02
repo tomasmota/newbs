@@ -13,9 +13,6 @@ export default async function createPlugin(
   // needs a logger
   return await createRouter({
     logger: env.logger,
-    scheduler: env.scheduler
+    // scheduler: env.scheduler
   });
-  
-  // const r : RouterOptions = {scheduler: env.scheduler}
-  // return await createRouter();
 }

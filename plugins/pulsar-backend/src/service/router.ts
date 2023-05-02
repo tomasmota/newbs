@@ -6,7 +6,7 @@ import { Logger } from 'winston';
 
 export interface RouterOptions {
   logger: Logger;
-  scheduler: PluginTaskScheduler;
+  scheduler?: PluginTaskScheduler;
 }
 
 export async function createRouter(
@@ -14,18 +14,19 @@ export async function createRouter(
 ): Promise<express.Router> {
   const { logger, scheduler } = options;
 
-  await scheduler.scheduleTask({
-    id: 'pulsar-fetch-stats',
-    frequency: {minutes: 10 },
-    timeout: {minutes: 5 },
-    initialDelay: { minutes: 1 },
-    scope: "global",
-    fn: async () => {
-      console.log("\n\n\n\n\n\n\nFETCHING PULSAR STATS\n\n\n\n");
-      // await linguistBackendApi.processEntities();
-    },
-  });
-
+  if (scheduler){
+    await scheduler.scheduleTask({
+      id: 'pulsar-fetch-stats',
+      frequency: {minutes: 10 },
+      timeout: {minutes: 5 },
+      initialDelay: { minutes: 1 },
+      scope: "global",
+      fn: async () => {
+        console.log("\n\n\n\n\n\n\nFETCHING PULSAR STATS\n\n\n\n");
+        // await linguistBackendApi.processEntities();
+      },
+    });
+  }
 
   const router = Router();
   router.use(express.json());
