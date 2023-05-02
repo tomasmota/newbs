@@ -36,7 +36,7 @@ export async function createRouter(
     response.json({ status: 'ok' });
   });
 
-  router.get(':tenant/:namespace/:topic/stats', (req, res) => {
+  router.get('/:tenant/:namespace/:topic/stats', (req, res) => {
     const tenant = req.params.tenant;
     const namespace = req.params.namespace;
     const topic = req.params.tenant;
