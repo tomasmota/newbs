@@ -1,5 +1,5 @@
 import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
-import { PulsarApi, TopicStats } from './types';
+import { Namespace, PulsarApi, TopicStats } from './types';
 
 /**
  * Options for creating a PulsarClient.
@@ -20,27 +20,37 @@ export class PulsarClient implements PulsarApi {
     this.fetchApi = options.fetchApi;
   }
 
+  async getNamespaces(tenant: string): Promise<Namespace[]> {
+    const baseUrl = await this.discoveryApi.getBaseUrl('pulsar');
+    // const topicEndpoint = `${baseUrl}/${tenant}/${namespace}/${topic}/stats`;
+    const targetUrl = `${baseUrl}/${tenant}/namespaces`;
+
+    const result: Response = await this.fetchApi.fetch(targetUrl);
+    const content = await result.json();
+
+    if (!result.ok) {
+      throw new Error(`${content}`);
+    }
+
+    const data = content as Namespace[];
+    return data;
+  }
+
   async getTopicStats(
     tenant: string,
     namespace: string,
     topic: string,
   ): Promise<TopicStats> {
     const baseUrl = await this.discoveryApi.getBaseUrl('pulsar');
-    // const targetUrl = `${baseUrl}/admin/v2/persistent/${tenant}/${namespace}/${topic}/stats`;
     const targetUrl = `${baseUrl}/${tenant}/${namespace}/${topic}/stats`;
-    console.log(targetUrl);
 
-    const result = await this.fetchApi.fetch(targetUrl);
-    const data = await result.json();
+    const result: Response = await this.fetchApi.fetch(targetUrl);
+    const content = result.json();
 
     if (!result.ok) {
-      throw new Error(`${data.message}`);
+      throw new Error(`${content}`);
     }
 
-    //remove
-    console.log('printing result in client');
-    console.log(result);
-
-    return data;
+    return content;
   }
 }

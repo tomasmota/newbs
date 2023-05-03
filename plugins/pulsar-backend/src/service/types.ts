@@ -1,9 +1,13 @@
-export type ListTopicsResponse = {
-  topics: string[];
-};
+export type Namespace = {
+  tenant: string;
+  name: string;
+}
 
-/** @public */
-export type PulsarService = {
-  listTopics(): Promise<ListTopicsResponse>;
-  topicStats(): Promise<ListTopicsResponse>;
+// export type PulsarTopic = {
+//   namespace: string;
+//   name: string;
+// }
+
+export type PulsarApi = {
+  getNamespaces(tenant: string): Promise<Namespace[]>;
 };

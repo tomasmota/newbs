@@ -1,5 +1,10 @@
 import { createApiRef } from "@backstage/core-plugin-api";
 
+export type Namespace = {
+  tenant: string;
+  name: string;
+}
+
 export type TopicStats = {
   msgRateIn: number;
   msgRateOut: number;
@@ -15,6 +20,7 @@ export type TopicStats = {
 export interface PulsarApi {
   /** Get stats for this pulsar topic */
   getTopicStats(tenant: string, namespace: string, topic: string): Promise<TopicStats>;
+  getNamespaces(tenant: string): Promise<Namespace[]>;
 }
 
 /**

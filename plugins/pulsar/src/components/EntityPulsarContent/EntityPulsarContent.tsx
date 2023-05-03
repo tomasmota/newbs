@@ -46,7 +46,9 @@ async function getStats(
 function getTopicPath(path: string | undefined): TopicPath {
   const pathRegExp: RegExp = /^([^/]+)\/([^/]+)\/([^/]+)$/; // matches the form 'tenant/namespace/topic'
   if (path === undefined || !pathRegExp.test(path)) {
-    throw Error(`Expected an annotation value in the form of <tenant>/<namespace>/<topic>, got: '${path}'`); // make a proper error here, not sure how to display this yet
+    throw Error(
+      `Expected an annotation value in the form of <tenant>/<namespace>/<topic>, got: '${path}'`,
+    ); // make a proper error here, not sure how to display this yet
   }
   const [tenant, namespace, topic] = path.split('/');
   return { tenant, namespace, topic };
@@ -75,13 +77,9 @@ export const EntityPulsarContent = () => {
       return;
     }
     const tp = getTopicPath(pulsarAnnotation);
-    const data = pulsarApi.getTopicStats(tp.tenant, tp.namespace, tp.topic);
+    const data = await pulsarApi.getNamespaces(tp.tenant);
     console.log(data);
-    return getStats(
-      tp.tenant ?? 'public',
-      tp.namespace ?? 'default',
-      tp.topic,
-    );
+    return getStats(tp.tenant ?? 'public', tp.namespace ?? 'default', tp.topic);
   }, []);
 
   return (
@@ -97,7 +95,10 @@ export const EntityPulsarContent = () => {
       {loading && <Progress />}
 
       {isPulsarConfigured && !loading && error && (
-        <WarningPanel title="Failed to fetch Pulsar information" message={error?.message} />
+        <WarningPanel
+          title="Failed to fetch Pulsar information"
+          message={error?.message}
+        />
       )}
 
       {isPulsarConfigured && !loading && !error && value !== undefined && (
