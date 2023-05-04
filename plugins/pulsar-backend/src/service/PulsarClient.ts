@@ -16,8 +16,10 @@ export class PulsarClient implements PulsarApi {
 
     if (response.ok) {
       const nsArray = (await response.json()) as string[];
-      const namespaces = nsArray.map(n => ({ name: n, tenant: tenant }));
-      console.log('NAMESPACES: ' + namespaces);
+      const namespaces: Namespace[] = nsArray.map(n => ({ name: n, tenant: tenant }));
+      console.log('NAMESPACES json: ' + response.json);
+      console.log('NAMESPACES arrayj: ' + nsArray);
+      console.log('NAMESPACES: ' + namespaces[1].name);
       return namespaces;
     } else {
       throw new Error('Failed to fetch Pulsar topic stats');

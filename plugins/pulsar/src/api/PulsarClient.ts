@@ -1,5 +1,6 @@
 import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
 import { Namespace, PulsarApi, TopicStats } from './types';
+import { ResponseError } from '@backstage/errors';
 
 /**
  * Options for creating a PulsarClient.
@@ -22,18 +23,21 @@ export class PulsarClient implements PulsarApi {
 
   async getNamespaces(tenant: string): Promise<Namespace[]> {
     const baseUrl = await this.discoveryApi.getBaseUrl('pulsar');
-    // const topicEndpoint = `${baseUrl}/${tenant}/${namespace}/${topic}/stats`;
     const targetUrl = `${baseUrl}/${tenant}/namespaces`;
 
     const result: Response = await this.fetchApi.fetch(targetUrl);
-    const content = await result.json();
 
     if (!result.ok) {
-      throw new Error(`${content}`);
+      throw await ResponseError.fromResponse(result);
     }
 
-    const data = content as Namespace[];
-    return data;
+    const content = await result.json() as Namespace[];
+    console.log(content);
+
+    throw new Error("bla");
+    // const data =  content as Namespace[];
+    // console.log("namespaces: " + data[1].name);
+    // return data;
   }
 
   async getTopicStats(
