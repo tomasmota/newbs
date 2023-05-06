@@ -1,4 +1,5 @@
 import { createServiceBuilder } from '@backstage/backend-common';
+import { ConfigReader } from '@backstage/config';
 import { Server } from 'http';
 import { Logger } from 'winston';
 import { createRouter } from './router';
@@ -13,9 +14,11 @@ export async function startStandaloneServer(
   options: ServerOptions,
 ): Promise<Server> {
   const logger = options.logger.child({ service: 'pulsar-backend' });
+  const config = new ConfigReader({});
   logger.debug('Starting application server...');
   const router = await createRouter({
     logger,
+    config
   });
 
   let service = createServiceBuilder(module)

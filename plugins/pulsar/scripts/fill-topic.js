@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var pulsar_client_1 = require("pulsar-client");
 function sleep(ms) {
     return __awaiter(this, void 0, void 0, function () {
@@ -54,7 +54,7 @@ function runProducer(producer) {
                 case 1:
                     _a.sent();
                     return [4 /*yield*/, producer.send({
-                            data: Buffer.from("Hello Pulsar")
+                            data: Buffer.from("Hello Pulsar"),
                         })];
                 case 2:
                     _a.sent();
@@ -93,24 +93,24 @@ var TOPIC_NAME = 'my-topic';
         switch (_a.label) {
             case 0:
                 client = new pulsar_client_1.Client({
-                    serviceUrl: 'pulsar://localhost:6650'
+                    serviceUrl: 'pulsar://localhost:6650',
                 });
                 console.log('client created');
                 return [4 /*yield*/, client.createProducer({
-                        topic: TOPIC_NAME
+                        topic: TOPIC_NAME,
                     })];
             case 1:
                 producer = _a.sent();
                 console.log('producer created');
                 return [4 /*yield*/, client.subscribe({
                         topic: TOPIC_NAME,
-                        subscription: 'sub1'
+                        subscription: 'sub1',
                     })];
             case 2:
                 consumer1 = _a.sent();
                 return [4 /*yield*/, client.subscribe({
                         topic: TOPIC_NAME,
-                        subscription: 'sub2'
+                        subscription: 'sub2',
                     })];
             case 3:
                 consumer2 = _a.sent();
