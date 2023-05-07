@@ -15,7 +15,7 @@ export async function startStandaloneServer(
 ): Promise<Server> {
   const logger = options.logger.child({ service: 'pulsar-backend' });
   const config = new ConfigReader({});
-  logger.debug('Starting application server...');
+  logger.info('Starting application server...');
   const router = await createRouter({
     logger,
     config
