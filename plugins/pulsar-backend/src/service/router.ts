@@ -25,6 +25,9 @@ export async function createRouter(
       initialDelay: { minutes: 1 },
       scope: 'global',
       fn: async () => {
+        // 1: Find all consumer and producer names defined in annotations
+        // 2: Fetch stats for all topics related to them
+        // 3: Store those stats in DB
         console.log('\n\n\n\n\n\n\nFETCHING PULSAR STATS\n\n\n\n');
         // await pulsarClient.ProcessSomeStuff();
       },
