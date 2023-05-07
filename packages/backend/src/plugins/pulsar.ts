@@ -11,10 +11,9 @@ export default async function createPlugin(
 
   // The env contains a lot of goodies, but our router currently only
   // needs a logger
-  console.log("WHATTTTT \n")
   return await createRouter({
     logger: env.logger,
-    // config: env.config,
-    // scheduler: env.scheduler,
+    config: env.config,
+    scheduler: env.scheduler,
   });
 }

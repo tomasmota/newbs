@@ -17,11 +17,10 @@ export async function createRouter(
 ): Promise<express.Router> {
   const { logger, scheduler } = options;
 
-  console.log('\n\n\n\n\n\nCreating Router\n\n\n\n');
   if (scheduler) {
     await scheduler.scheduleTask({
       id: 'pulsar-fetch-stats',
-      frequency: { minutes: 10 },
+      frequency: { minutes: 5 },
       timeout: { minutes: 5 },
       initialDelay: { minutes: 1 },
       scope: 'global',
