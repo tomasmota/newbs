@@ -4,7 +4,9 @@ export type Namespace = {
 }
 
 export type Topic = {
+  tenant: string;
   namespace: string;
+  persistent: boolean;
   name: string;
 }
 

@@ -10,30 +10,46 @@ export class PulsarClient implements PulsarApi {
     this.baseUrl = config.getString('pulsar.baseUrl');
   }
 
-  getAllTopics(): Promise<Topic[]> {
-    throw new Error('Method not implemented.');
+  async getTopics(tenant: string, namespace: string): Promise<Topic[]> {
+    const url = `${this.baseUrl}/admin/v2/persistent/${tenant}/${namespace}`;
+
+    const response = await fetch(url);
+
+    if (response.ok) {
+      const topics = (await response.json()) as string[];
+      return topics.map(t => {
+        const index = t.lastIndexOf("/"); // Topic names in this list have the following format: "persistent://public/default/my-topic"
+        const name = t.substring(index + 1);
+        return {name: name, tenant: tenant, namespace: namespace, persistent: true}
+      });
+    } else {
+      throw new Error('Failed to fetch Pulsar topic stats');
+    }
+  }
+
+  // Fetches all topics in all namespaces. For now assume there is only the public tenant
+  // TODO: Instead of fetching every single topic, only fetch topics used by services in the catalog
+  async getAllTopics(): Promise<Topic[]> {
+    const namespaces = await this.getNamespaces("public")/* .then(
+      ns => 
+    ); */
+
+    console.log("\n\nNamespaces:")
+    console.log(namespaces);
+    return [{name: "t", tenant: "that", namespace: "this", persistent: true}]
   }
 
   async getNamespaces(tenant: string): Promise<Namespace[]> {
-    console.log('\n\nwtf\n\n');
     const url = `${this.baseUrl}/admin/v2/namespaces/${tenant}`;
 
-    fetch(url)
-      .then(res => res.text())
-      .then(t => console.log(t));
-    console.log('\n\nwtf\n\n');
     const response = await fetch(url);
 
     if (response.ok) {
       const nsArray = (await response.json()) as string[];
-      const namespaces: Namespace[] = nsArray.map(n => ({
+      return nsArray.map(n => ({
         name: n,
         tenant: tenant,
       }));
-      // console.log('NAMESPACES json: ' + response.json);
-      // console.log('NAMESPACES arrayj: ' + nsArray);
-      // console.log('NAMESPACES: ' + namespaces[1].name);
-      return namespaces;
     } else {
       throw new Error('Failed to fetch Pulsar topic stats');
     }
