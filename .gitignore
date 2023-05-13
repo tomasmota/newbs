@@ -54,3 +54,6 @@ site
 .devenv*
 devenv.local.nix
 
+# Direnv
+.direnv
+
