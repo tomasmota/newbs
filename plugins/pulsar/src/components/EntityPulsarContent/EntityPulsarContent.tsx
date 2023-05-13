@@ -77,8 +77,8 @@ export const EntityPulsarContent = () => {
       return;
     }
     const tp = getTopicPath(pulsarAnnotation);
-    const data = await pulsarApi.getNamespaces(tp.tenant);
-    console.log(data);
+    // const data = await pulsarApi.getNamespaces(tp.tenant);
+    // console.log(data);
     return getStats(tp.tenant ?? 'public', tp.namespace ?? 'default', tp.topic);
   }, []);
 

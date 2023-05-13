@@ -31,7 +31,7 @@ export async function createRouter(
         // 1: Find all consumer and producer names defined in annotations
         // 2: Fetch stats for all topics related to them
         // 3: Store those stats in DB
-        console.log('\n\n\n\n\n\n\nFETCHING PULSAR STATS\n\n\n\n');
+        console.log('\nRunning schedule\n');
         await pulsarClient.getAllTopics();
         // await pulsarClient.ProcessSomeStuff();
       },
