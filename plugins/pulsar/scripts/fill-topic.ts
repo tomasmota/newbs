@@ -5,7 +5,7 @@ async function sleep(ms: number): Promise<void> {
 }
 
 async function runProducer(producer: Producer): Promise<void> {
-  while(true) {
+  while (true) {
     await sleep(50);
     await producer.send({
       data: Buffer.from(`Hello Pulsar`),
@@ -13,8 +13,11 @@ async function runProducer(producer: Producer): Promise<void> {
   }
 }
 
-async function runConsumer(consumer: Consumer, sleepTimeMs: number = 0): Promise<void> {
-  while(true) {
+async function runConsumer(
+  consumer: Consumer,
+  sleepTimeMs: number = 0,
+): Promise<void> {
+  while (true) {
     const msg = await consumer.receive();
     // console.log(`Consumer Received message: ${msg.getData().toString()}, sleeping for ${sleepTimeMs} miliseconds`);
     consumer.acknowledge(msg);
@@ -48,7 +51,11 @@ const TOPIC_NAME = 'my-topic';
     subscription: 'sub2',
   });
 
-  await Promise.all([runProducer(producer), runConsumer(consumer1), runConsumer(consumer2, 500)]);
+  await Promise.all([
+    runProducer(producer),
+    runConsumer(consumer1),
+    runConsumer(consumer2, 500),
+  ]);
 
   await client.close();
 })();

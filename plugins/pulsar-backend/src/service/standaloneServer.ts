@@ -18,7 +18,7 @@ export async function startStandaloneServer(
   logger.info('Starting application server...');
   const router = await createRouter({
     logger,
-    config
+    config,
   });
 
   let service = createServiceBuilder(module)

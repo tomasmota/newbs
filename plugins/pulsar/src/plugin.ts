@@ -1,4 +1,10 @@
-import { createApiFactory, createPlugin, createRoutableExtension, discoveryApiRef, fetchApiRef } from '@backstage/core-plugin-api';
+import {
+  createApiFactory,
+  createPlugin,
+  createRoutableExtension,
+  discoveryApiRef,
+  fetchApiRef,
+} from '@backstage/core-plugin-api';
 import { pulsarApiRef, PulsarClient } from './api';
 
 import { rootRouteRef } from './routes';
@@ -26,7 +32,9 @@ export const EntityPulsarContent = pulsarPlugin.provide(
   createRoutableExtension({
     name: 'EntityPulsarContent',
     component: () =>
-      import('./components/EntityPulsarContent').then(m => m.EntityPulsarContent),
+      import('./components/EntityPulsarContent').then(
+        m => m.EntityPulsarContent,
+      ),
     mountPoint: rootRouteRef,
   }),
 );

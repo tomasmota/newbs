@@ -31,28 +31,29 @@ export async function createRouter(
         // 1: Find all consumer and producer names defined in annotations
         // 2: Fetch stats for all topics related to them
         // 3: Store those stats in DB
-        console.log('\nRunning schedule\n');
-        const topics = await pulsarClient.getAllTopics();
-        console.log(topics);
+        console.log('\nRunning schedule');
+        pulsarClient.syncTopics();
       },
     });
   }
 
-
   const router = Router();
   router.use(express.json());
-
-  router.get('/health', (_, response) => {
-    logger.info('PONG!');
-    response.json({ status: 'ok' });
-  });
 
   router.get('/:tenant/namespaces', (req, res) => {
     const tenant = req.params.tenant;
     logger.info(`fetching namespaces in '${tenant}' tenant`);
     // const namespaces = pulsarClient.getNamespaces(tenant);
     // res.json(namespaces);
-    res.json({this: "that"})
+    res.json({ this: 'that' });
+  });
+
+  router.get('/topics', (_, res) => {
+    logger.info('fetching all topics');
+    // const namespaces = pulsarClient.getNamespaces(tenant);
+    // res.json(namespaces);
+    console.log(pulsarClient.getAllTopics());
+    res.json(pulsarClient.getAllTopics());
   });
 
   router.get('/:tenant/:namespace/:topic/stats', (req, res) => {

@@ -63,7 +63,7 @@ export type TopicStats = {
   msgRateOut: number;
   // msgThroughputOut: number;
   // bytesInCounter: number;
-  msgInCounter: number; 
+  msgInCounter: number;
   // bytesOutCounter: number;
   // msgOutCounter: number;
   averageMsgSize: number;

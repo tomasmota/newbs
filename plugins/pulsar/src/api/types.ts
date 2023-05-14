@@ -1,16 +1,16 @@
-import { createApiRef } from "@backstage/core-plugin-api";
+import { createApiRef } from '@backstage/core-plugin-api';
 
 export type Namespace = {
   tenant: string;
   name: string;
-}
+};
 
 export type TopicStats = {
   msgRateIn: number;
   msgRateOut: number;
-  msgInCounter: number; 
+  msgInCounter: number;
   averageMsgSize: number;
-}
+};
 
 /**
  * The API used by the pulsar plugin to get pulsar information
@@ -19,7 +19,11 @@ export type TopicStats = {
  */
 export interface PulsarApi {
   /** Get stats for this pulsar topic */
-  getTopicStats(tenant: string, namespace: string, topic: string): Promise<TopicStats>;
+  getTopicStats(
+    tenant: string,
+    namespace: string,
+    topic: string,
+  ): Promise<TopicStats>;
   getNamespaces(tenant: string): Promise<Namespace[]>;
 }
 

@@ -105,7 +105,7 @@ const isPulsarInformationAvailable = (_: Entity) => true;
 const pulsarContent = (
   <EntitySwitch>
     <EntitySwitch.Case if={isPulsarInformationAvailable}>
-      <EntityPulsarContent/>
+      <EntityPulsarContent />
     </EntitySwitch.Case>
   </EntitySwitch>
 );
