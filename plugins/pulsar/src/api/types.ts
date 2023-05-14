@@ -5,6 +5,14 @@ export type Namespace = {
   name: string;
 };
 
+export type Topic = {
+  tenant: string;
+  namespace: string;
+  persistent: boolean;
+  name: string;
+  stats?: TopicStats;
+};
+
 export type TopicStats = {
   msgRateIn: number;
   msgRateOut: number;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Grid,
@@ -24,6 +24,7 @@ import {
 import useAsync from 'react-use/lib/useAsync';
 import { pulsarApiRef } from '../../api';
 import { useApi } from '@backstage/core-plugin-api';
+import { TopicPicker } from './TopicPicker';
 
 async function getStats(
   tenant: string,
@@ -111,6 +112,7 @@ export const EntityPulsarContent = () => {
             <Typography>
               Egress: {Math.round(value.msgRateOut)} msg/s
             </Typography>
+            <TopicPicker></TopicPicker>
           </InfoCard>
           <Box>
             <Grid container spacing={2}>
