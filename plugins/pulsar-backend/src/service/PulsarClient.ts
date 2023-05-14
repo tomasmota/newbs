@@ -18,7 +18,6 @@ export class PulsarClient implements PulsarApi {
 
     if (response.ok) {
       const nsArray = (await response.json()) as string[];
-      console.log(nsArray)
       return nsArray.map(n => ({
         name: n.split("/")[1],
         tenant: tenant,
@@ -33,21 +32,18 @@ export class PulsarClient implements PulsarApi {
   async getAllTopics(): Promise<Topic[]> {
     console.log("Fetching all topics\n")
     const namespaces = await this.getNamespaces("public")
-    console.log("\n\nNamespaces:")
-    console.log(namespaces);
-    const topics = namespaces.flatMap(
+    const topics = Promise.all(namespaces.map(
       async ns => {
-        await this.getTopics(ns.tenant, ns.name)
+        const topics = await this.getTopics(ns.tenant, ns.name);
+        return topics;
       }
-    )
-    console.log(await Promise.all(topics));
+    )).then(res => res.flat());
 
-    return [{name: "t", tenant: "that", namespace: "this", persistent: true}]
+    return topics;
   }
 
 
   async getTopics(tenant: string, namespace: string): Promise<Topic[]> {
-    console.log(`Fetching all topics in namespace ${namespace}`)
     const url = `${this.baseUrl}/admin/v2/persistent/${tenant}/${namespace}`;
 
     const response = await fetch(url);
@@ -57,7 +53,6 @@ export class PulsarClient implements PulsarApi {
       return topics.map(t => {
         const index = t.lastIndexOf("/"); // Topic names in this list have the following format: "persistent://public/default/my-topic"
         const name = t.substring(index + 1);
-        console.log(name);
         return {name: name, tenant: tenant, namespace: namespace, persistent: true}
       });
     } else {

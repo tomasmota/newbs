@@ -32,8 +32,8 @@ export async function createRouter(
         // 2: Fetch stats for all topics related to them
         // 3: Store those stats in DB
         console.log('\nRunning schedule\n');
-        await pulsarClient.getAllTopics();
-        // await pulsarClient.ProcessSomeStuff();
+        const topics = await pulsarClient.getAllTopics();
+        console.log(topics);
       },
     });
   }
