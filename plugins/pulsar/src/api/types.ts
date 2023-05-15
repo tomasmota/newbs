@@ -32,7 +32,10 @@ export interface PulsarApi {
     namespace: string,
     topic: string,
   ): Promise<TopicStats>;
-  getNamespaces(tenant: string): Promise<Namespace[]>;
+
+  // getNamespaces(tenant: string): Promise<Namespace[]>;
+
+  getTopics(): Promise<Topic[]>;
 }
 
 /**

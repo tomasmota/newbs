@@ -1,5 +1,5 @@
 import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
-import { Namespace, PulsarApi, TopicStats } from './types';
+import { PulsarApi, Topic, TopicStats } from './types';
 import { ResponseError } from '@backstage/errors';
 
 /**
@@ -21,9 +21,9 @@ export class PulsarClient implements PulsarApi {
     this.fetchApi = options.fetchApi;
   }
 
-  async getNamespaces(tenant: string): Promise<Namespace[]> {
+  async getTopics(): Promise<Topic[]> {
     const baseUrl = await this.discoveryApi.getBaseUrl('pulsar');
-    const targetUrl = `${baseUrl}/${tenant}/namespaces`;
+    const targetUrl = `${baseUrl}/topics`;
 
     const result: Response = await this.fetchApi.fetch(targetUrl);
 
@@ -31,13 +31,9 @@ export class PulsarClient implements PulsarApi {
       throw await ResponseError.fromResponse(result);
     }
 
-    const content = (await result.json()) as Namespace[];
+    const content = (await result.json()) as Topic[];
     console.log(content);
-
-    throw new Error('bla');
-    // const data =  content as Namespace[];
-    // console.log("namespaces: " + data[1].name);
-    // return data;
+    return content;
   }
 
   async getTopicStats(
@@ -57,4 +53,25 @@ export class PulsarClient implements PulsarApi {
 
     return content;
   }
+
+// async getNamespaces(tenant: string): Promise<Namespace[]> {
+//   const baseUrl = await this.discoveryApi.getBaseUrl('pulsar');
+//   const targetUrl = `${baseUrl}/${tenant}/namespaces`;
+//
+//   const result: Response = await this.fetchApi.fetch(targetUrl);
+//
+//   if (!result.ok) {
+//     throw await ResponseError.fromResponse(result);
+//   }
+//
+//   const content = (await result.json()) as Namespace[];
+//   console.log(content);
+//
+//   throw new Error('bla');
+//   // const data =  content as Namespace[];
+//   // console.log("namespaces: " + data[1].name);
+//   // return data;
+// }
+
+
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Grid,
@@ -83,6 +83,8 @@ export const EntityPulsarContent = () => {
     return getStats(tp.tenant ?? 'public', tp.namespace ?? 'default', tp.topic);
   }, []);
 
+  const [topic, setTopic] = useState<string>("")
+
   return (
     <Content>
       <ContentHeader title="Pulsar Topic Information">
@@ -104,6 +106,7 @@ export const EntityPulsarContent = () => {
 
       {isPulsarConfigured && !loading && !error && value !== undefined && (
         <>
+          <TopicPicker></TopicPicker>
           <InfoCard>
             <Typography variant="h5">Throughput</Typography>
             <Typography>
@@ -112,7 +115,6 @@ export const EntityPulsarContent = () => {
             <Typography>
               Egress: {Math.round(value.msgRateOut)} msg/s
             </Typography>
-            <TopicPicker></TopicPicker>
           </InfoCard>
           <Box>
             <Grid container spacing={2}>
