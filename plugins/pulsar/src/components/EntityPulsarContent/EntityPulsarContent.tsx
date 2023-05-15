@@ -106,7 +106,8 @@ export const EntityPulsarContent = () => {
 
       {isPulsarConfigured && !loading && !error && value !== undefined && (
         <>
-          <TopicPicker></TopicPicker>
+          <TopicPicker onChange={setTopic}></TopicPicker>
+          <div>{topic}</div>
           <InfoCard>
             <Typography variant="h5">Throughput</Typography>
             <Typography>
