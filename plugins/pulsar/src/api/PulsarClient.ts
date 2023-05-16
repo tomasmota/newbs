@@ -32,7 +32,6 @@ export class PulsarClient implements PulsarApi {
     }
 
     const content = (await result.json()) as Topic[];
-    console.log(content);
     return content;
   }
 
@@ -65,11 +64,9 @@ export class PulsarClient implements PulsarApi {
 //   }
 //
 //   const content = (await result.json()) as Namespace[];
-//   console.log(content);
 //
 //   throw new Error('bla');
 //   // const data =  content as Namespace[];
-//   // console.log("namespaces: " + data[1].name);
 //   // return data;
 // }
 

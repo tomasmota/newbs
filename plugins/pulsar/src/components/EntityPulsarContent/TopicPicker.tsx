@@ -1,18 +1,23 @@
 import { useApi } from '@backstage/core-plugin-api';
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import useAsync from 'react-use/lib/useAsync';
 import { pulsarApiRef, Topic } from '../../api/types';
 import { Select } from '@backstage/core-components';
 
-export const TopicPicker = (props: {
-  onChange: Dispatch<SetStateAction<Topic | undefined>>;
-}) => {
-  const { onChange } = props;
+type TopicPickerProps = {
+  selectedTopic: Topic | undefined;
+  setSelectedTopic: (value: Topic) => void;
+};
+
+export const TopicPicker = ({
+  selectedTopic,
+  setSelectedTopic
+}: TopicPickerProps) => {
   const pulsarApi = useApi(pulsarApiRef);
 
   const { value, loading, error } = useAsync(async () => {
     const topics = await pulsarApi.getTopics();
-    onChange(topics[0]);
+    // onChange(topics[0]);
     return topics;
   }, []);
 
@@ -24,8 +29,9 @@ export const TopicPicker = (props: {
           label="Topics"
           onChange={selected => {
             const s = String(Array.isArray(selected) ? selected[0] : selected);
-            onChange(value.find(t => t.fullName === s)!);
+            setSelectedTopic(value.find(t => t.fullName === s)!);
           }}
+          // Figure out how to show the selectedTopic here
           items={
             loading
               ? [{ label: 'Loading...', value: 'loading' }]

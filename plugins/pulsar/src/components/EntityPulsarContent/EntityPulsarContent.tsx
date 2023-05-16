@@ -74,15 +74,17 @@ export const EntityPulsarContent = () => {
   const isPulsarConfigured = Boolean(pulsarAnnotation);
   const pulsarApi = useApi(pulsarApiRef);
 
+  const [topic, setTopic] = useState<Topic>();
+
   const { value, loading, error } = useAsync(async () => {
     if (!isPulsarConfigured) {
       return;
     }
+    console.log(topic)
     const tp = getTopicPath(pulsarAnnotation);
     return getStats(tp.tenant ?? 'public', tp.namespace ?? 'default', tp.topic);
-  }, []);
+  }, [topic]);
 
-  const [topic, setTopic] = useState<Topic>();
 
   return (
     <Content>
@@ -105,7 +107,7 @@ export const EntityPulsarContent = () => {
 
       {isPulsarConfigured && !loading && !error && value !== undefined && (
         <>
-          <TopicPicker onChange={setTopic}></TopicPicker>
+          <TopicPicker selectedTopic={topic} setSelectedTopic={setTopic}></TopicPicker>
           <div>{topic?.name}</div>
           <InfoCard>
             <Typography variant="h5">Throughput</Typography>
