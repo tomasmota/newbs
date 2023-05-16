@@ -6,10 +6,11 @@ export type Namespace = {
 };
 
 export type Topic = {
+  fullName: string;
   tenant: string;
   namespace: string;
-  persistent: boolean;
   name: string;
+  persistent: boolean;
   stats?: TopicStats;
 };
 
@@ -33,8 +34,7 @@ export interface PulsarApi {
     topic: string,
   ): Promise<TopicStats>;
 
-  // getNamespaces(tenant: string): Promise<Namespace[]>;
-
+  /** Get all topics in the cluster */
   getTopics(): Promise<Topic[]>;
 }
 

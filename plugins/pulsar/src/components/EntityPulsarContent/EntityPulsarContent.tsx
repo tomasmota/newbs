@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Grid,
@@ -78,12 +78,10 @@ export const EntityPulsarContent = () => {
       return;
     }
     const tp = getTopicPath(pulsarAnnotation);
-    // const data = await pulsarApi.getNamespaces(tp.tenant);
-    // console.log(data);
     return getStats(tp.tenant ?? 'public', tp.namespace ?? 'default', tp.topic);
   }, []);
 
-  const [topic, setTopic] = useState<string>("")
+  const [topic, setTopic] = useState<string>('');
 
   return (
     <Content>

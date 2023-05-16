@@ -4,18 +4,19 @@ import useAsync from 'react-use/lib/useAsync';
 import { pulsarApiRef } from '../../api/types';
 import { Select, SelectItem } from '@backstage/core-components';
 
-export const TopicPicker = (
-  props: {onChange: Dispatch<SetStateAction<string>>}
-) => {
-  const {onChange} = props;
+export const TopicPicker = (props: {
+  onChange: Dispatch<SetStateAction<string>>;
+}) => {
+  const { onChange } = props;
   const pulsarApi = useApi(pulsarApiRef);
 
   const { value, loading, error } = useAsync(async () => {
     const topics = await pulsarApi.getTopics();
 
-    const items: SelectItem[] = topics.map(i => ({
-      label: i.name,
-      value: i.name,
+    onChange(topics[0].fullName);
+    const items: SelectItem[] = topics.map(t => ({
+      label: t.fullName,
+      value: t.fullName,
     }));
     return items;
   }, []);

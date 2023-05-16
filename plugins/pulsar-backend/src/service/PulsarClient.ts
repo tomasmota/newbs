@@ -58,6 +58,7 @@ export class PulsarClient implements PulsarApi {
         const index = t.lastIndexOf('/'); // Topic names in this list have the following format: "persistent://public/default/my-topic"
         const name = t.substring(index + 1);
         return {
+          fullName: t,
           name: name,
           tenant: tenant,
           namespace: namespace,
