@@ -25,6 +25,7 @@ import useAsync from 'react-use/lib/useAsync';
 import { pulsarApiRef } from '../../api';
 import { useApi } from '@backstage/core-plugin-api';
 import { TopicPicker } from './TopicPicker';
+import { Topic } from '../../api/types';
 
 async function getStats(
   tenant: string,
@@ -81,7 +82,7 @@ export const EntityPulsarContent = () => {
     return getStats(tp.tenant ?? 'public', tp.namespace ?? 'default', tp.topic);
   }, []);
 
-  const [topic, setTopic] = useState<string>('');
+  const [topic, setTopic] = useState<Topic>();
 
   return (
     <Content>
@@ -105,7 +106,7 @@ export const EntityPulsarContent = () => {
       {isPulsarConfigured && !loading && !error && value !== undefined && (
         <>
           <TopicPicker onChange={setTopic}></TopicPicker>
-          <div>{topic}</div>
+          <div>{topic?.name}</div>
           <InfoCard>
             <Typography variant="h5">Throughput</Typography>
             <Typography>
