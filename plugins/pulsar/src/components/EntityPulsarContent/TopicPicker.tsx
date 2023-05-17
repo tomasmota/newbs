@@ -2,28 +2,38 @@ import { useApi } from '@backstage/core-plugin-api';
 import React from 'react';
 import useAsync from 'react-use/lib/useAsync';
 import { pulsarApiRef, Topic } from '../../api/types';
-import { Select } from '@backstage/core-components';
+import { Select, WarningPanel } from '@backstage/core-components';
 
-type TopicPickerProps = {
+/** @public */
+export type TopicPickerProps = {
   selectedTopic: Topic | undefined;
   setSelectedTopic: (value: Topic) => void;
 };
 
+/** @public */
 export const TopicPicker = ({
   selectedTopic,
-  setSelectedTopic
+  setSelectedTopic,
 }: TopicPickerProps) => {
   const pulsarApi = useApi(pulsarApiRef);
 
   const { value, loading, error } = useAsync(async () => {
-    console.log("fetching all topics");
+    console.log('fetching all topics');
     const topics = await pulsarApi.getTopics();
-    setSelectedTopic(topics[0]);
+    setSelectedTopic(topics[3]);
     return topics;
   }, []);
 
   return (
     <>
+      {!loading && error && (
+        //TODO: test this out
+        <WarningPanel
+          title="Failed to fetch Pulsar topics information"
+          message={error?.message}
+        />
+      )}
+
       {!error && value !== undefined && (
         <Select
           native

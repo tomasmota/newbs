@@ -46,9 +46,9 @@ export class PulsarClient implements PulsarApi {
     const result: Response = await this.fetchApi.fetch(targetUrl);
     const json = await result.json();
     const content = json as TopicStats;
-    console.log("json content:")
-    console.log(json)
-    console.log("casted");
+    console.log('json content:');
+    console.log(json);
+    console.log('casted');
     console.log(content);
 
     if (!result.ok) {

@@ -3,23 +3,25 @@ import React from 'react';
 import useAsync from 'react-use/lib/useAsync';
 import { pulsarApiRef, Topic } from '../../api/types';
 import {
-    Box,
-    Grid,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
+  Box,
+  Grid,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
   TableRow,
   Typography,
 } from '@material-ui/core';
-import { InfoCard, Progress } from '@backstage/core-components';
+import { InfoCard, Progress, WarningPanel } from '@backstage/core-components';
 
-type TopicStatsContentProps = {
+/** @public */
+export type TopicStatsContentProps = {
   topic: Topic;
 };
 
-export const TopicStatsContent = ({ topic }: TopicStatsContentProps ) => {
+/** @public */
+export const TopicStatsContent = ({ topic }: TopicStatsContentProps) => {
   const pulsarApi = useApi(pulsarApiRef);
 
   const {
@@ -37,6 +39,14 @@ export const TopicStatsContent = ({ topic }: TopicStatsContentProps ) => {
   return (
     <>
       {loading && <Progress />}
+
+      {!loading && error && (
+        //TODO: test this out
+        <WarningPanel
+          title="Failed to fetch topic stats"
+          message={error?.message}
+        />
+      )}
 
       {!error && !loading && stats !== undefined && (
         <>
@@ -103,52 +113,3 @@ export const TopicStatsContent = ({ topic }: TopicStatsContentProps ) => {
     </>
   );
 };
-
-// <Box>
-//   <Grid container spacing={2}>
-//     <Grid item xs={6}>
-//       <Paper>
-//         <Table size="small">
-//           <TableHead>
-//             <TableRow>
-//               <TableCell>Producer</TableCell>
-//               <TableCell>msg/s</TableCell>
-//             </TableRow>
-//           </TableHead>
-//           <TableBody>
-//             {stats.publishers.map((p, index) => (
-//               <TableRow key={index}>
-//                 <TableCell>{p.producerName}</TableCell>
-//                 <TableCell>{p.msgRateIn.toFixed(3)}</TableCell>
-//               </TableRow>
-//             ))}
-//           </TableBody>
-//         </Table>
-//       </Paper>
-//     </Grid>
-//     <Grid item xs={6}>
-//       <Paper>
-//         <Table>
-//           <TableHead>
-//             <TableRow>
-//               <TableCell>Consumer</TableCell>
-//               <TableCell>msg/s</TableCell>
-//             </TableRow>
-//           </TableHead>
-//           <TableBody>
-//             {Object.entries(stats.subscriptions).map(
-//               ([subName, subContent]) => {
-//                 return (
-//                   <TableRow key={subName}>
-//                     <TableCell>{subName}</TableCell>
-//                     <TableCell>{subContent.messageAckRate}</TableCell>
-//                   </TableRow>
-//                 );
-//               },
-//             )}
-//           </TableBody>
-//         </Table>
-//       </Paper>
-//     </Grid>
-//   </Grid>
-// </Box>

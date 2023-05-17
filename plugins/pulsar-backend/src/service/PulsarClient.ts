@@ -70,8 +70,12 @@ export class PulsarClient implements PulsarApi {
     }
   }
 
-  async getTopicStats(tenant :string, namespace: string, topic: string): Promise<TopicStats> {
-    console.log("fetching stats for topic: " + topic);
+  async getTopicStats(
+    tenant: string,
+    namespace: string,
+    topic: string,
+  ): Promise<TopicStats> {
+    console.log('fetching stats for topic: ' + topic);
     const url = `${this.baseUrl}/admin/v2/persistent/${tenant}/${namespace}/${topic}/stats`;
     const response = await fetch(url);
 

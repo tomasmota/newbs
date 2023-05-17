@@ -13,7 +13,11 @@ export type Topic = {
 
 export type PulsarApi = {
   getAllTopics(): Topic[];
-  getTopicStats(tenant: string, namespace: string, topic: string): Promise<TopicStats>;
+  getTopicStats(
+    tenant: string,
+    namespace: string,
+    topic: string,
+  ): Promise<TopicStats>;
   syncTopics(): Promise<void>;
 };
 
