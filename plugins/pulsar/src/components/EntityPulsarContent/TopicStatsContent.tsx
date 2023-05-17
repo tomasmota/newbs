@@ -34,7 +34,7 @@ export const TopicStatsContent = ({ topic }: TopicStatsContentProps) => {
       topic.namespace,
       topic.name,
     );
-  }, []);
+  }, [topic]);
 
   return (
     <>

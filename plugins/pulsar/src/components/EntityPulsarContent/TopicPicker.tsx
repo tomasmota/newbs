@@ -18,7 +18,6 @@ export const TopicPicker = ({
   const pulsarApi = useApi(pulsarApiRef);
 
   const { value, loading, error } = useAsync(async () => {
-    console.log('fetching all topics');
     const topics = await pulsarApi.getTopics();
     setSelectedTopic(topics[0]);
     return topics;
