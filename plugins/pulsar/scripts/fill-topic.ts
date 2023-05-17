@@ -36,19 +36,20 @@ const TOPIC_NAME = 'my-topic';
   // Producer
   const producer = await client.createProducer({
     topic: TOPIC_NAME,
+    producerName: 'producer 1'
   });
   console.log('producer created');
 
   // Consumer 1
   const consumer1 = await client.subscribe({
     topic: TOPIC_NAME,
-    subscription: 'sub1',
+    subscription: 'consumer 1',
   });
 
   // Consumer 2
   const consumer2 = await client.subscribe({
     topic: TOPIC_NAME,
-    subscription: 'sub2',
+    subscription: 'consumer 2',
   });
 
   await Promise.all([
