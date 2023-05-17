@@ -80,6 +80,5 @@ export class PulsarClient implements PulsarApi {
     } else {
       throw new Error('Failed to fetch Pulsar topic stats');
     }
-
   }
 }

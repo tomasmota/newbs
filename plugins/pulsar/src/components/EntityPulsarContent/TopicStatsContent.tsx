@@ -3,6 +3,14 @@ import React from 'react';
 import useAsync from 'react-use/lib/useAsync';
 import { pulsarApiRef, Topic } from '../../api/types';
 import {
+    Box,
+    Grid,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+  TableRow,
   Typography,
 } from '@material-ui/core';
 import { InfoCard, Progress } from '@backstage/core-components';
@@ -41,6 +49,55 @@ export const TopicStatsContent = ({ topic }: TopicStatsContentProps ) => {
               Egress: {Math.round(stats.msgRateOut)} msg/s
             </Typography>
           </InfoCard>
+
+          <Box>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Paper>
+                  <Table size="small">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Producer</TableCell>
+                        <TableCell>msg/s</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {stats.publishers.map((p, index) => (
+                        <TableRow key={index}>
+                          <TableCell>{p.producerName}</TableCell>
+                          <TableCell>{p.msgRateIn.toFixed(3)}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </Paper>
+              </Grid>
+              <Grid item xs={6}>
+                <Paper>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Consumer</TableCell>
+                        <TableCell>msg/s</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {Object.entries(stats.subscriptions).map(
+                        ([subName, subContent]) => {
+                          return (
+                            <TableRow key={subName}>
+                              <TableCell>{subName}</TableCell>
+                              <TableCell>{subContent.messageAckRate}</TableCell>
+                            </TableRow>
+                          );
+                        },
+                      )}
+                    </TableBody>
+                  </Table>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Box>
         </>
       )}
     </>

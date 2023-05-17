@@ -109,58 +109,9 @@ export const EntityPulsarContent = () => {
       {isPulsarConfigured && !loading && !error && value !== undefined && (
         <>
           <TopicPicker selectedTopic={topic} setSelectedTopic={setTopic}></TopicPicker>
-          <div>{topic?.name}</div>
           {topic !== undefined &&
             <TopicStatsContent topic={topic}></TopicStatsContent>
           }
-          <Box>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Paper>
-                  <Table size="small">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Producer</TableCell>
-                        <TableCell>msg/s</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {value.publishers.map((p, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{p.producerName}</TableCell>
-                          <TableCell>{p.msgRateIn.toFixed(3)}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </Paper>
-              </Grid>
-              <Grid item xs={6}>
-                <Paper>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Consumer</TableCell>
-                        <TableCell>msg/s</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {Object.entries(value.subscriptions).map(
-                        ([subName, subContent]) => {
-                          return (
-                            <TableRow key={subName}>
-                              <TableCell>{subName}</TableCell>
-                              <TableCell>{subContent.messageAckRate}</TableCell>
-                            </TableRow>
-                          );
-                        },
-                      )}
-                    </TableBody>
-                  </Table>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Box>
         </>
       )}
     </Content>
