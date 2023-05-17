@@ -20,7 +20,7 @@ export const TopicPicker = ({
   const { value, loading, error } = useAsync(async () => {
     console.log('fetching all topics');
     const topics = await pulsarApi.getTopics();
-    setSelectedTopic(topics[3]);
+    setSelectedTopic(topics[0]);
     return topics;
   }, []);
 
