@@ -40,28 +40,19 @@ export async function createRouter(
   const router = Router();
   router.use(express.json());
 
-  router.get('/:tenant/namespaces', (req, res) => {
-    const tenant = req.params.tenant;
-    logger.info(`fetching namespaces in '${tenant}' tenant`);
-    // const namespaces = pulsarClient.getNamespaces(tenant);
-    // res.json(namespaces);
-    res.json({ this: 'that' });
-  });
-
   router.get('/topics', (_, res) => {
     logger.info('fetching all topics');
-    // const namespaces = pulsarClient.getNamespaces(tenant);
-    // res.json(namespaces);
-    console.log(pulsarClient.getAllTopics());
     res.json(pulsarClient.getAllTopics());
   });
 
-  router.get('/:tenant/:namespace/:topic/stats', (req, res) => {
-    const tenant = req.params.tenant;
-    const namespace = req.params.namespace;
-    const topic = req.params.topic;
-    logger.info(`fetching stats for topic ${tenant}/${namespace}/${topic}`);
-    res.json({ topicCount: 42 });
+  router.get('/:tenant/:namespace/:topic/stats', async (req, res) => {
+    res.json(
+      await pulsarClient.getTopicStats(
+        req.params.tenant,
+        req.params.namespace,
+        req.params.topic,
+      ),
+    );
   });
 
   router.use(errorHandler());

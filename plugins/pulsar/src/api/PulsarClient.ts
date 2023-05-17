@@ -44,7 +44,12 @@ export class PulsarClient implements PulsarApi {
     const targetUrl = `${baseUrl}/${tenant}/${namespace}/${topic}/stats`;
 
     const result: Response = await this.fetchApi.fetch(targetUrl);
-    const content = result.json();
+    const json = await result.json();
+    const content = json as TopicStats;
+    console.log("json content:")
+    console.log(json)
+    console.log("casted");
+    console.log(content);
 
     if (!result.ok) {
       throw new Error(`${content}`);
@@ -52,23 +57,4 @@ export class PulsarClient implements PulsarApi {
 
     return content;
   }
-
-// async getNamespaces(tenant: string): Promise<Namespace[]> {
-//   const baseUrl = await this.discoveryApi.getBaseUrl('pulsar');
-//   const targetUrl = `${baseUrl}/${tenant}/namespaces`;
-//
-//   const result: Response = await this.fetchApi.fetch(targetUrl);
-//
-//   if (!result.ok) {
-//     throw await ResponseError.fromResponse(result);
-//   }
-//
-//   const content = (await result.json()) as Namespace[];
-//
-//   throw new Error('bla');
-//   // const data =  content as Namespace[];
-//   // return data;
-// }
-
-
 }

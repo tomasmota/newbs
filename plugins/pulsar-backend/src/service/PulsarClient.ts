@@ -1,5 +1,5 @@
 import { Config } from '@backstage/config';
-import { PulsarApi, Namespace, Topic } from './types';
+import { PulsarApi, Namespace, Topic, TopicStats } from './types';
 import fetch from 'cross-fetch';
 
 export class PulsarClient implements PulsarApi {
@@ -28,7 +28,7 @@ export class PulsarClient implements PulsarApi {
         tenant: tenant,
       }));
     } else {
-      throw new Error('Failed to fetch Pulsar topic stats');
+      throw new Error('Failed to fetch Pulsar namespaces');
     }
   }
 
@@ -68,5 +68,18 @@ export class PulsarClient implements PulsarApi {
     } else {
       throw new Error('Failed to fetch Pulsar topic stats');
     }
+  }
+
+  async getTopicStats(tenant :string, namespace: string, topic: string): Promise<TopicStats> {
+    console.log("fetching stats for topic: " + topic);
+    const url = `${this.baseUrl}/admin/v2/persistent/${tenant}/${namespace}/${topic}/stats`;
+    const response = await fetch(url);
+
+    if (response.ok) {
+      return (await response.json()) as TopicStats;
+    } else {
+      throw new Error('Failed to fetch Pulsar topic stats');
+    }
+
   }
 }

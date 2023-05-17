@@ -11,8 +11,16 @@ export type Topic = {
   persistent: boolean;
 };
 
+export type TopicStats = {
+  msgRateIn: number;
+  msgRateOut: number;
+  msgInCounter: number;
+  averageMsgSize: number;
+};
+
 export type PulsarApi = {
   getAllTopics(): Topic[];
+  getTopicStats(tenant: string, namespace: string, topic: string): Promise<TopicStats>;
   syncTopics(): Promise<void>;
-  getNamespaces(tenant: string): Promise<Namespace[]>;
 };
+

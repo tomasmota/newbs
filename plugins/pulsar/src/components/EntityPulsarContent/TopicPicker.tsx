@@ -16,8 +16,9 @@ export const TopicPicker = ({
   const pulsarApi = useApi(pulsarApiRef);
 
   const { value, loading, error } = useAsync(async () => {
+    console.log("fetching all topics");
     const topics = await pulsarApi.getTopics();
-    // onChange(topics[0]);
+    setSelectedTopic(topics[0]);
     return topics;
   }, []);
 
@@ -31,7 +32,7 @@ export const TopicPicker = ({
             const s = String(Array.isArray(selected) ? selected[0] : selected);
             setSelectedTopic(value.find(t => t.fullName === s)!);
           }}
-          // Figure out how to show the selectedTopic here
+          selected={selectedTopic?.fullName || value[0].fullName}
           items={
             loading
               ? [{ label: 'Loading...', value: 'loading' }]

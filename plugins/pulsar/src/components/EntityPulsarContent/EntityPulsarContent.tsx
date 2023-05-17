@@ -25,6 +25,7 @@ import useAsync from 'react-use/lib/useAsync';
 import { pulsarApiRef } from '../../api';
 import { useApi } from '@backstage/core-plugin-api';
 import { TopicPicker } from './TopicPicker';
+import { TopicStatsContent } from './TopicStatsContent';
 import { Topic } from '../../api/types';
 
 async function getStats(
@@ -83,7 +84,7 @@ export const EntityPulsarContent = () => {
     console.log(topic)
     const tp = getTopicPath(pulsarAnnotation);
     return getStats(tp.tenant ?? 'public', tp.namespace ?? 'default', tp.topic);
-  }, [topic]);
+  }, []);
 
 
   return (
@@ -109,15 +110,9 @@ export const EntityPulsarContent = () => {
         <>
           <TopicPicker selectedTopic={topic} setSelectedTopic={setTopic}></TopicPicker>
           <div>{topic?.name}</div>
-          <InfoCard>
-            <Typography variant="h5">Throughput</Typography>
-            <Typography>
-              Ingress: {Math.round(value.msgRateIn)} msg/s
-            </Typography>
-            <Typography>
-              Egress: {Math.round(value.msgRateOut)} msg/s
-            </Typography>
-          </InfoCard>
+          {topic !== undefined &&
+            <TopicStatsContent topic={topic}></TopicStatsContent>
+          }
           <Box>
             <Grid container spacing={2}>
               <Grid item xs={6}>
