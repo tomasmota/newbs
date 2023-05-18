@@ -39,13 +39,6 @@ export const pulsarApiRef = createApiRef<PulsarApi>({
   id: 'plugin.pulsar.api',
 });
 
-// export type TopicStats = {
-//   msgRateIn: number;
-//   msgRateOut: number;
-//   msgInCounter: number;
-//   averageMsgSize: number;
-// };
-
 export type Publisher = {
   // accessMode: string;
   msgRateIn: number;
@@ -117,7 +110,7 @@ export type TopicStats = {
   averageMsgSize: number;
   // msgChunkPublished: boolean;
   // storageSize: number;
-  // backlogSize: number;
+  backlogSize: number;
   // publishRateLimitedTimes: number;
   // earliestMsgPublishTimeInBacklogs: number;
   // offloadedStorageSize: number;

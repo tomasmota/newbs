@@ -3,6 +3,7 @@ import React from 'react';
 import useAsync from 'react-use/lib/useAsync';
 import { pulsarApiRef, Topic } from '../../api/types';
 import { Select, WarningPanel } from '@backstage/core-components';
+import { FormControl } from '@material-ui/core';
 
 /** @public */
 export type TopicPickerProps = {
@@ -34,23 +35,30 @@ export const TopicPicker = ({
       )}
 
       {!error && value !== undefined && (
-        <Select
-          native
-          label="Topics"
-          onChange={selected => {
-            const s = String(Array.isArray(selected) ? selected[0] : selected);
-            setSelectedTopic(value.find(t => t.fullName === s)!);
-          }}
-          selected={selectedTopic?.fullName || value[0].fullName}
-          items={
-            loading
-              ? [{ label: 'Loading...', value: 'loading' }]
-              : value.map(t => ({
-                  label: t.fullName,
-                  value: t.fullName,
-                })) || []
-          }
-        />
+        <FormControl
+          margin="normal"
+          required
+        >
+          <Select
+            native
+            label="Topics"
+            onChange={selected => {
+              const s = String(
+                Array.isArray(selected) ? selected[0] : selected,
+              );
+              setSelectedTopic(value.find(t => t.fullName === s)!);
+            }}
+            selected={selectedTopic?.fullName}
+            items={
+              loading
+                ? [{ label: 'Loading...', value: 'loading' }]
+                : value.map(t => ({
+                  label: t.fullName.substring(t.fullName.indexOf('://') + 3),
+                  value: t.fullName
+                  })) || []
+            }
+          />
+        </FormControl>
       )}
     </>
   );

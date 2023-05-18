@@ -58,6 +58,9 @@ export const TopicStatsContent = ({ topic }: TopicStatsContentProps) => {
             <Typography>
               Egress: {Math.round(stats.msgRateOut)} msg/s
             </Typography>
+            <Typography>
+              Backlog size: {Math.round(stats.backlogSize)} messages
+            </Typography>
           </InfoCard>
 
           <Box>

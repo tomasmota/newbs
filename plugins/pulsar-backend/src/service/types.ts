@@ -92,7 +92,7 @@ export type TopicStats = {
   averageMsgSize: number;
   // msgChunkPublished: boolean;
   // storageSize: number;
-  // backlogSize: number;
+  backlogSize: number;
   // publishRateLimitedTimes: number;
   // earliestMsgPublishTimeInBacklogs: number;
   // offloadedStorageSize: number;
