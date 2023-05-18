@@ -44,13 +44,14 @@ function sleep(ms) {
         });
     });
 }
-function runProducer(producer) {
+function runProducer(producer, sleepTimeMs) {
+    if (sleepTimeMs === void 0) { sleepTimeMs = 50; }
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!true) return [3 /*break*/, 3];
-                    return [4 /*yield*/, sleep(50)];
+                    return [4 /*yield*/, sleep(sleepTimeMs)];
                 case 1:
                     _a.sent();
                     return [4 /*yield*/, producer.send({
@@ -65,7 +66,7 @@ function runProducer(producer) {
     });
 }
 function runConsumer(consumer, sleepTimeMs) {
-    if (sleepTimeMs === void 0) { sleepTimeMs = 0; }
+    if (sleepTimeMs === void 0) { sleepTimeMs = 50; }
     return __awaiter(this, void 0, void 0, function () {
         var msg;
         return __generator(this, function (_a) {
@@ -86,44 +87,52 @@ function runConsumer(consumer, sleepTimeMs) {
         });
     });
 }
-var TOPIC_NAME = 'my-topic';
+var TOPIC1 = 'first topic';
+var TOPIC2 = 'second topic';
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var client, producer, consumer1, consumer2;
+    var client, producer1, consumer1, producer2, consumer2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 client = new pulsar_client_1.Client({
                     serviceUrl: 'pulsar://localhost:6650',
                 });
-                console.log('client created');
                 return [4 /*yield*/, client.createProducer({
-                        topic: TOPIC_NAME,
-                        producerName: 'producer'
+                        topic: TOPIC1,
+                        producerName: 'producer 1'
                     })];
             case 1:
-                producer = _a.sent();
-                console.log('producer created');
+                producer1 = _a.sent();
                 return [4 /*yield*/, client.subscribe({
-                        topic: TOPIC_NAME,
-                        subscription: 'sub1',
+                        topic: TOPIC1,
+                        subscription: 'consumer 1',
                     })];
             case 2:
                 consumer1 = _a.sent();
-                return [4 /*yield*/, client.subscribe({
-                        topic: TOPIC_NAME,
-                        subscription: 'sub2',
+                console.log('first topic setup');
+                return [4 /*yield*/, client.createProducer({
+                        topic: TOPIC2,
+                        producerName: 'producer 2'
                     })];
             case 3:
-                consumer2 = _a.sent();
-                return [4 /*yield*/, Promise.all([
-                        runProducer(producer),
-                        runConsumer(consumer1),
-                        runConsumer(consumer2, 500),
-                    ])];
+                producer2 = _a.sent();
+                return [4 /*yield*/, client.subscribe({
+                        topic: TOPIC2,
+                        subscription: 'consumer 2',
+                    })];
             case 4:
+                consumer2 = _a.sent();
+                console.log('second topic setup');
+                return [4 /*yield*/, Promise.all([
+                        runProducer(producer1, 50),
+                        runConsumer(consumer1, 100),
+                        runProducer(producer2, 200),
+                        runConsumer(consumer2, 800),
+                    ])];
+            case 5:
                 _a.sent();
                 return [4 /*yield*/, client.close()];
-            case 5:
+            case 6:
                 _a.sent();
                 return [2 /*return*/];
         }

@@ -10,7 +10,7 @@ import { TopicStatsContent } from './TopicStatsContent';
 import { Topic } from '../../api/types';
 
 // TODO: Annotation should be producer/subscriber name instead of a topic
-// For now keep annotation around but the content is actaully not being used,
+// For now keep annotation around but the content is actually not being used,
 // we are looking at all topics
 const ANNOTATION_PULSAR_TOPIC = 'backstage.io/pulsar-topic';
 
