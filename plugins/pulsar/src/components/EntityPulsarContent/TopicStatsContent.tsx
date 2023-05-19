@@ -50,67 +50,67 @@ export const TopicStatsContent = ({ topic }: TopicStatsContentProps) => {
 
       {!error && !loading && stats !== undefined && (
         <>
-          <InfoCard>
-            <Typography variant="h5">Throughput</Typography>
-            <Typography>
-              Ingress: {Math.round(stats.msgRateIn)} msg/s
-            </Typography>
-            <Typography>
-              Egress: {Math.round(stats.msgRateOut)} msg/s
-            </Typography>
-            <Typography>
-              Backlog size: {Math.round(stats.backlogSize)} messages
-            </Typography>
-          </InfoCard>
-
-          <Box>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Paper>
-                  <Table size="small">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Producer</TableCell>
-                        <TableCell>msg/s</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {stats.publishers.map((p, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{p.producerName}</TableCell>
-                          <TableCell>{p.msgRateIn.toFixed(3)}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </Paper>
-              </Grid>
-              <Grid item xs={6}>
-                <Paper>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Consumer</TableCell>
-                        <TableCell>msg/s</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {Object.entries(stats.subscriptions).map(
-                        ([subName, subContent]) => {
-                          return (
-                            <TableRow key={subName}>
-                              <TableCell>{subName}</TableCell>
-                              <TableCell>{subContent.messageAckRate}</TableCell>
-                            </TableRow>
-                          );
-                        },
-                      )}
-                    </TableBody>
-                  </Table>
-                </Paper>
-              </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <InfoCard>
+                <Typography variant="h5">Throughput</Typography>
+                <Typography>
+                  Ingress: {Math.round(stats.msgRateIn)} msg/s
+                </Typography>
+                <Typography>
+                  Egress: {Math.round(stats.msgRateOut)} msg/s
+                </Typography>
+                <Typography>
+                  Backlog size: {Math.round(stats.backlogSize)} messages
+                </Typography>
+              </InfoCard>
             </Grid>
-          </Box>
+
+            <Grid item xs={6}>
+              <Paper>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Producer</TableCell>
+                      <TableCell>msg/s</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {stats.publishers.map((p, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{p.producerName}</TableCell>
+                        <TableCell>{p.msgRateIn.toFixed(3)}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Paper>
+            </Grid>
+            <Grid item xs={6}>
+              <Paper>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Consumer</TableCell>
+                      <TableCell>msg/s</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {Object.entries(stats.subscriptions).map(
+                      ([subName, subContent]) => {
+                        return (
+                          <TableRow key={subName}>
+                            <TableCell>{subName}</TableCell>
+                            <TableCell>{subContent.messageAckRate}</TableCell>
+                          </TableRow>
+                        );
+                      },
+                    )}
+                  </TableBody>
+                </Table>
+              </Paper>
+            </Grid>
+          </Grid>
         </>
       )}
     </>
