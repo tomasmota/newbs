@@ -7,6 +7,8 @@
         pkgs.typescript
         pkgs.git
         pkgs.podman 
+        pkgs.ripgrep
+        pkgs.gdb
     ];
 
     scripts = {
